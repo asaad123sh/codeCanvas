@@ -1,0 +1,498 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+  
+  body {
+    @apply bg-surface-950 text-surface-100 font-sans antialiased;
+    overflow: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-surface-500;
+  }
+}
+
+@layer components {
+  .builder-panel {
+    @apply bg-surface-900 border border-surface-700/50 rounded-xl shadow-panel;
+  }
+
+  .panel-header {
+    @apply px-4 py-3 border-b border-surface-700/50 flex items-center justify-between;
+  }
+
+  .panel-title {
+    @apply text-sm font-semibold text-surface-200 uppercase tracking-wider;
+  }
+
+  .btn-primary {
+    @apply px-4 py-2 bg-primary-600 hover:bg-primary-500 text-white font-medium rounded-lg 
+           transition-all duration-200 ease-out shadow-sm hover:shadow-md 
+           active:scale-[0.98] flex items-center gap-2 text-sm;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 bg-surface-700 hover:bg-surface-600 text-surface-200 font-medium rounded-lg 
+           transition-all duration-200 ease-out border border-surface-600/50
+           active:scale-[0.98] flex items-center gap-2 text-sm;
+  }
+
+  .btn-ghost {
+    @apply px-3 py-2 hover:bg-surface-700/50 text-surface-300 hover:text-surface-100 
+           font-medium rounded-lg transition-all duration-150 flex items-center gap-2 text-sm;
+  }
+
+  .btn-icon {
+    @apply p-2 hover:bg-surface-700/50 text-surface-400 hover:text-surface-100 
+           rounded-lg transition-all duration-150;
+  }
+
+  .input-field {
+    @apply w-full px-3 py-2 bg-surface-800 border border-surface-600/50 rounded-lg 
+           text-surface-100 placeholder-surface-500 text-sm
+           focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500
+           transition-all duration-200;
+  }
+
+  .select-field {
+    @apply w-full px-3 py-2 bg-surface-800 border border-surface-600/50 rounded-lg 
+           text-surface-100 text-sm appearance-none cursor-pointer
+           focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500
+           transition-all duration-200;
+  }
+
+  .label-text {
+    @apply text-xs font-medium text-surface-400 mb-1 block;
+  }
+
+  .element-card {
+    @apply p-3 bg-surface-800/50 hover:bg-surface-700/50 border border-surface-700/30 
+           hover:border-primary-500/30 rounded-lg cursor-grab active:cursor-grabbing
+           transition-all duration-200 flex flex-col items-center gap-2 group;
+  }
+
+  .element-card-icon {
+    @apply w-8 h-8 flex items-center justify-center rounded-lg bg-surface-700/50 
+           group-hover:bg-primary-500/20 text-surface-400 group-hover:text-primary-400
+           transition-all duration-200;
+  }
+
+  .element-card-label {
+    @apply text-xs font-medium text-surface-400 group-hover:text-surface-200 transition-colors;
+  }
+
+  .canvas-element {
+    @apply relative transition-all duration-150 min-h-[20px];
+  }
+
+  .preview-mode .canvas-element:hover {
+    outline: none;
+  }
+
+  .canvas-element:hover:not(.preview-disabled) {
+    @apply outline outline-1 outline-primary-400/40 outline-offset-1;
+  }
+
+  .preview-mode .canvas-element:hover,
+  .preview-mode .canvas-element.selected {
+    outline: none;
+  }
+
+  .canvas-element.selected {
+    @apply outline outline-2 outline-primary-500 outline-offset-1;
+  }
+
+  .canvas-element.is-locked {
+    cursor: not-allowed !important;
+  }
+
+  /* Drop position indicators (Elementor-style insertion lines) */
+  .canvas-element.drop-before::after,
+  .canvas-element.drop-after::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #6366f1;
+    border-radius: 999px;
+    z-index: 60;
+    pointer-events: none;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.9);
+  }
+
+  .canvas-element.drop-before::after { top: -4px; }
+  .canvas-element.drop-after::after { bottom: -4px; }
+
+  .canvas-element.drop-after::before,
+  .canvas-element.drop-before::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    width: 12px;
+    height: 12px;
+    background: #6366f1;
+    border-radius: 999px;
+    z-index: 61;
+    pointer-events: none;
+  }
+
+  .canvas-element.drop-before::before { top: -6px; }
+  .canvas-element.drop-after::before { bottom: -6px; }
+
+  .canvas-element.drop-inside,
+  .canvas-element.is-over {
+    @apply outline outline-2 outline-dashed outline-primary-500 outline-offset-1;
+    background-color: rgba(99, 102, 241, 0.06);
+  }
+
+  .canvas-page.root-drop-active {
+    outline: 2px dashed #6366f1;
+    outline-offset: -2px;
+    background-color: rgba(99, 102, 241, 0.05);
+  }
+
+  .canvas-empty-container {
+    @apply text-center text-surface-400 text-[13px] border border-dashed border-surface-500 rounded-lg m-1;
+    padding: 18px 12px;
+    background: rgba(148, 163, 184, 0.05);
+  }
+
+  .canvas-spacer-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #94a3b8;
+    pointer-events: none;
+  }
+
+  .canvas-empty-state {
+    @apply flex flex-col items-center justify-center text-surface-400;
+    min-height: 500px;
+  }
+
+  .canvas-empty-state__icon {
+    @apply w-20 h-20 rounded-2xl flex items-center justify-center mb-4 text-3xl;
+    background: rgba(148, 163, 184, 0.1);
+    color: #94a3b8;
+  }
+
+  .canvas-empty-state h3 {
+    @apply text-lg font-semibold text-surface-600 mb-1;
+  }
+
+  .canvas-empty-state p {
+    @apply text-sm text-surface-400;
+  }
+
+  /* Selected element action bar */
+  .element-toolbar {
+    @apply absolute flex items-center gap-0.5 rounded-md px-1 py-0.5 z-50;
+    top: -28px;
+    left: 0;
+    background: #4f46e5;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.4);
+    color: #fff;
+  }
+
+  .element-toolbar__label {
+    @apply text-[10px] font-semibold uppercase tracking-wide pr-1 pl-1;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .element-toolbar button {
+    @apply flex items-center justify-center rounded transition-colors;
+    width: 18px;
+    height: 18px;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .element-toolbar button:hover {
+    background: rgba(255, 255, 255, 0.22);
+    color: #fff;
+  }
+
+  .element-toolbar button.danger:hover {
+    background: #ef4444;
+  }
+
+  .tab-btn {
+    @apply px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200
+           text-surface-400 hover:text-surface-200 hover:bg-surface-700/30;
+  }
+
+  .tab-btn.active {
+    @apply bg-primary-600/20 text-primary-400 border border-primary-500/30;
+  }
+
+  .divider {
+    @apply h-px bg-surface-700/50 my-2;
+  }
+
+  .section-divider {
+    @apply h-px bg-gradient-to-r from-transparent via-surface-600/50 to-transparent my-4;
+  }
+
+  .drop-indicator {
+    @apply h-1 bg-primary-500 rounded-full mx-2 transition-all duration-200;
+    box-shadow: 0 0 8px rgba(99, 102, 241, 0.5);
+  }
+
+  .modal-overlay {
+    @apply fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center;
+  }
+
+  .modal-content {
+    @apply bg-surface-900 border border-surface-700/50 rounded-2xl shadow-2xl max-w-2xl w-full mx-4;
+  }
+
+  .color-swatch {
+    @apply w-8 h-8 rounded-lg border-2 border-surface-600 cursor-pointer transition-transform 
+           hover:scale-110 active:scale-95;
+  }
+
+  .property-group {
+    @apply p-3 border-b border-surface-700/30 last:border-b-0;
+  }
+
+  .property-group-title {
+    @apply text-xs font-semibold text-surface-400 uppercase tracking-wider mb-3 
+           flex items-center gap-2 cursor-pointer hover:text-surface-300;
+  }
+
+  .db-table-card {
+    @apply bg-surface-800 border border-surface-700/50 rounded-xl overflow-hidden;
+  }
+
+  .db-column-row {
+    @apply grid grid-cols-12 gap-2 px-3 py-2 border-b border-surface-700/20 items-center text-sm;
+  }
+
+  /* Navigator (Elementor-style layer tree) */
+  .navigator-panel {
+    @apply absolute top-3 z-40 w-72 max-h-[70%] flex flex-col overflow-hidden rounded-xl;
+    background: rgba(15, 23, 42, 0.96);
+    border: 1px solid rgba(51, 65, 85, 0.8);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+  }
+
+  .navigator-tree {
+    @apply overflow-y-auto py-1;
+  }
+
+  .navigator-row {
+    @apply flex items-center gap-1 pr-2 py-1.5 text-xs text-surface-300 cursor-pointer select-none;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .navigator-row:hover {
+    background: rgba(51, 65, 85, 0.5);
+    color: #e2e8f0;
+  }
+
+  .navigator-row.selected {
+    background: rgba(79, 70, 229, 0.28);
+    color: #fff;
+    box-shadow: inset 2px 0 0 #6366f1;
+  }
+
+  .navigator-row.is-hidden {
+    opacity: 0.5;
+  }
+
+  .navigator-row__chevron {
+    @apply flex items-center justify-center shrink-0;
+    width: 14px;
+    height: 14px;
+    color: #94a3b8;
+  }
+
+  .navigator-row__icon {
+    @apply shrink-0 text-[11px];
+    width: 14px;
+    text-align: center;
+  }
+
+  .navigator-row__label {
+    @apply truncate flex-1;
+  }
+
+  .navigator-row__actions {
+    @apply flex items-center gap-0.5 opacity-0;
+  }
+
+  .navigator-row:hover .navigator-row__actions,
+  .navigator-row.selected .navigator-row__actions {
+    opacity: 1;
+  }
+
+  .navigator-row__actions button {
+    @apply flex items-center justify-center rounded p-0.5 transition-colors;
+    color: #94a3b8;
+  }
+
+  .navigator-row__actions button:hover {
+    background: rgba(99, 102, 241, 0.35);
+    color: #fff;
+  }
+}
+
+@layer utilities {
+  .glass-effect {
+    @apply bg-surface-900/80 backdrop-blur-xl border border-surface-700/30;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Free drag positioning (canvas + top bar)                            *
+ * ------------------------------------------------------------------ */
+
+@layer components {
+  /* Selected elements become drag handles while free drag is on. */
+  .canvas-element.free-drag-ready {
+    cursor: move;
+    touch-action: none;
+  }
+
+  .canvas-element.free-drag-ready::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border: 1px dashed rgba(34, 197, 94, 0.45);
+    border-radius: inherit;
+  }
+
+  .free-drag-banner {
+    position: fixed;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    z-index: 45;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 11px;
+    pointer-events: none;
+    background: rgba(15, 23, 42, 0.92);
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    color: #cbd5e1;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+
+  .free-drag-banner__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+  }
+
+  .free-drag-banner__mode {
+    font-weight: 600;
+    color: #86efac;
+    white-space: nowrap;
+  }
+
+  .free-drag-banner__text {
+    color: #94a3b8;
+    font-family: theme('fontFamily.mono');
+    white-space: nowrap;
+  }
+
+  /* Top bar dropdown for the positioning mode */
+  .position-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    z-index: 60;
+    width: 320px;
+    padding: 6px;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.98);
+    border: 1px solid rgba(51, 65, 85, 0.9);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .position-menu__item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 8px 10px;
+    border-radius: 8px;
+    color: #cbd5e1;
+    transition: background-color 0.15s, color 0.15s;
+  }
+
+  .position-menu__item:hover {
+    background: rgba(51, 65, 85, 0.6);
+    color: #fff;
+  }
+
+  .position-menu__row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .position-menu__hint {
+    display: block;
+    margin-top: 2px;
+    font-size: 10px;
+    color: #64748b;
+  }
+}
+/* ------------------------------------------------------------------ *
+ * Animation preset tiles                                              *
+ * ------------------------------------------------------------------ *
+ * A tile previews its preset by running the real animation, but only
+ * while the pointer (or keyboard focus) is on it. Paused by default so a
+ * category full of "Loops" presets does not spin forever off-screen.
+ */
+.wb-tile .wb-tile-fx {
+  animation-play-state: paused;
+}
+
+.wb-tile:hover .wb-tile-fx,
+.wb-tile:focus-visible .wb-tile-fx {
+  animation-play-state: running;
+}

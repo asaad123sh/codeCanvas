@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kite Cafe</title>
+  <meta name="description" content="Sourdough, pastries and coffee.">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wb-root">
+  <section class="wb-element wb-container wb-section" id="wb-el-sec1">
+      <h1 class="wb-element wb-widget wb-widget-heading wb-heading" id="wb-el-hero">
+        Kite Cafe
+      </h1>
+      <form class="wb-element wb-widget wb-widget-search-form wb-search-form" id="wb-el-search1" placeholder="Search the menu…" action="/" method="get" action="/">
+        <input type="hidden" name="_webcraft_search" value="1" />
+        <label class="wb-search__field">
+          <span class="wb-search__label"></span>
+          <input class="wb-search__input" type="search" name="s" placeholder="Search the menu…" />
+        </label>
+        <button type="submit" class="wb-search__submit">Search</button>
+      </form>
+      <section class="wb-element wb-container wb-section" id="wb-el-bakery">
+          <h2 class="wb-element wb-widget wb-widget-heading wb-heading" id="wb-el-bakery-h">
+            Fresh pastries
+          </h2>
+          <div class="wb-element wb-widget wb-widget-text wb-text" id="wb-el-bakery-p">
+            We bake sourdough bread every morning at six. Ask about the almond croissant.
+          </div>
+      </section>
+      <section class="wb-element wb-container wb-section" id="wb-el-location">
+          <h2 class="wb-element wb-widget wb-widget-heading wb-heading" id="wb-el-loc-h">
+            Our location
+          </h2>
+          <div class="wb-element wb-widget wb-widget-text wb-text" id="wb-el-loc-p">
+            Find us at 12 Harbour Road. The bakery is wheelchair accessible.
+          </div>
+      </section>
+      <form class="wb-element wb-container wb-form" id="wb-el-contact" method="post">
+        <input type="hidden" name="_webcraft_form" value="1" />
+          <input class="wb-element wb-widget wb-widget-input wb-input" id="wb-el-c-name" name="name" placeholder="Your name" />
+          <textarea class="wb-element wb-widget wb-widget-textarea wb-textarea" id="wb-el-c-msg" name="message" placeholder="Message"></textarea>
+          <a class="wb-element wb-widget wb-widget-button wb-button" id="wb-el-c-send" type="submit" href="#">
+            Send
+          </a>
+      </form>
+  </section>
+<section class="wb-search-results" aria-live="polite">
+  <!--webcraft:search-results-->
+</section>
+</div>
+
+  <script src="/script.js" defer></script>
+</body>
+</html>

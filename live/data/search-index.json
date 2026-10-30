@@ -1,0 +1,30 @@
+{
+  "hash": "63e2b8a15d3b416782e4d761b8c644850ff23370",
+  "builtAt": "2026-10-03T14:56:08.988Z",
+  "documents": [
+    {
+      "id": "page",
+      "url": "/",
+      "title": "Kite Cafe",
+      "text": "Kite Cafe",
+      "tags": "",
+      "order": -1
+    },
+    {
+      "id": "wb-el-sec1",
+      "url": "/#wb-el-sec1",
+      "title": "Kite Cafe",
+      "text": "Kite Cafe Search Fresh pastries We bake sourdough bread every morning at six. Ask about the almond croissant. Our location Find us at 12 Harbour Road. The bakery is wheelchair accessible. Send",
+      "tags": "Kite Cafe",
+      "order": 0
+    },
+    {
+      "id": "section-2",
+      "url": "/",
+      "title": "Section 2",
+      "text": "",
+      "tags": "Kite Cafe",
+      "order": 1
+    }
+  ]
+}
