@@ -194,13 +194,13 @@ export const PropertiesPanel: React.FC = () => {
     );
 
   return (
-    <div className="w-96 h-full bg-surface-900 border-l border-surface-700/50 flex flex-col shrink-0 overflow-hidden">
+    <div className="w-96 max-w-full sm:max-w-[384px] h-full bg-surface-900 border-l border-surface-700/50 flex flex-col shrink-0 overflow-hidden shadow-2xl lg:shadow-none">
       {/* Header */}
       <div className="panel-header">
         <span className="panel-title truncate">
           {element ? element.label || element.type : 'Properties'}
         </span>
-        <button onClick={toggleRightPanel} className="p-1 hover:bg-surface-700 rounded transition-colors">
+        <button onClick={toggleRightPanel} className="p-1 hover:bg-surface-700 rounded transition-colors" title="Close">
           <X size={16} className="text-surface-400" />
         </button>
       </div>
@@ -218,7 +218,7 @@ export const PropertiesPanel: React.FC = () => {
       ) : (
         <>
           {/* Tabs */}
-          <div className="flex border-b border-surface-700/50">
+          <div className="flex border-b border-surface-700/50 overflow-x-auto no-scrollbar">
             {TABS.filter((tab) => tab.id !== 'boxes' || showBoxesTab).map((tab) => (
               <button
                 key={tab.id}
@@ -226,7 +226,7 @@ export const PropertiesPanel: React.FC = () => {
                   setActiveTab(tab.id);
                   setQuery('');
                 }}
-                className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium transition-all ${
+                className={`flex-1 min-w-[60px] shrink-0 flex items-center justify-center gap-1.5 py-2.5 px-2 text-xs font-medium transition-all ${
                   activeTab === tab.id
                     ? 'text-primary-400 border-b-2 border-primary-500 bg-primary-500/5'
                     : 'text-surface-400 hover:text-surface-300 hover:bg-surface-800/50'

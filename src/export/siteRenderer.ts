@@ -308,10 +308,10 @@ export function generateSiteCSS(
 export const SITE_CSS = `
 /* Every page is wrapped in this shell, so the nav/footer documents style the
    same way no matter which page is open. */
-.wb-site-shell { display: flex; flex-direction: column; min-height: 100vh; }
-.wb-site-main { flex: 1 0 auto; }
-.wb-site-header { flex: 0 0 auto; }
-.wb-site-footer { flex: 0 0 auto; }
+.wb-site-shell { display: flex; flex-direction: column; min-height: 100vh; width: 100%; max-width: 100%; }
+.wb-site-main { flex: 1 0 auto; width: 100%; max-width: 100%; }
+.wb-site-header { flex: 0 0 auto; width: 100%; max-width: 100%; }
+.wb-site-footer { flex: 0 0 auto; width: 100%; max-width: 100%; }
 
 /* Menu buttons ----------------------------------------------------- */
 .wb-menu { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
@@ -334,7 +334,9 @@ export const SITE_CSS = `
 [id] { scroll-margin-top: 80px; }
 
 @media screen and (max-width: 767px) {
-  .wb-menu { overflow-x: auto; flex-wrap: nowrap; }
+  .wb-menu { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+  .wb-menu__link { padding: 8px 12px; font-size: 14px; }
+  .wb-site-shell, .wb-site-header, .wb-site-main, .wb-site-footer { width: 100%; max-width: 100%; }
 }
 `.trim();
 

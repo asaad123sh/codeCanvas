@@ -3,7 +3,7 @@ import { useBuilderStore } from '../store/builderStore';
 import {
   Undo2, Redo2, Monitor, Tablet, Smartphone, Eye, EyeOff,
   Download, ZoomIn, ZoomOut, Layers, Settings, Globe, Code, ListTree,
-  Move, ChevronDown, Check, Files
+  Move, ChevronDown, Check, Files, LayoutGrid, Paintbrush
 } from 'lucide-react';
 import { getElementDefinition } from '../engine/elementRegistry';
 import { POSITION_MODES } from '../engine/positioning';
@@ -17,7 +17,8 @@ export const TopBar: React.FC<TopBarProps> = ({ onExportClick }) => {
     undo, redo, history, deviceView, setDeviceView, zoom, setZoom,
     isPreviewMode, togglePreview, activeTab, setActiveTab, pageConfig,
     navigatorOpen, toggleNavigator, positionMode, togglePositionMode, setPositionMode,
-    sitePanelOpen, toggleSitePanel, pages, activePageId
+    sitePanelOpen, toggleSitePanel, pages, activePageId,
+    leftPanelOpen, toggleLeftPanel, rightPanelOpen, toggleRightPanel
   } = useBuilderStore();
 
   const [positionMenuOpen, setPositionMenuOpen] = useState(false);
@@ -128,24 +129,39 @@ export const TopBar: React.FC<TopBarProps> = ({ onExportClick }) => {
   ];
 
   return (
-    <div className="h-14 w-full glass-effect border-b border-surface-700/50 flex items-center px-4 gap-3 shrink-0 z-40">
+    <div className="h-14 w-full glass-effect border-b border-surface-700/50 flex items-center px-2 sm:px-4 gap-1.5 sm:gap-3 shrink-0 z-40 overflow-x-auto no-scrollbar">
       {/* Logo */}
-      <div className="flex items-center gap-2 mr-4">
+      <div className="flex items-center gap-2 mr-1 sm:mr-3 shrink-0">
         <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center shadow-lg shadow-primary-500/20">
           <span className="text-white font-bold text-sm">W</span>
         </div>
         <span className="text-sm font-bold gradient-text hidden sm:block">WebCraft Pro</span>
       </div>
 
-      <div className="w-px h-6 bg-surface-700/50" />
+      {activeTab === 'design' && (
+        <button
+          onClick={toggleLeftPanel}
+          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all shrink-0 ${
+            leftPanelOpen
+              ? 'bg-primary-600/20 text-primary-400 border border-primary-500/30'
+              : 'bg-surface-800 text-surface-400 hover:text-white hover:bg-surface-700 border border-surface-700/50'
+          }`}
+          title="Toggle Elements library"
+        >
+          <LayoutGrid size={14} />
+          <span className="hidden xl:inline">Elements</span>
+        </button>
+      )}
+
+      <div className="w-px h-6 bg-surface-700/50 shrink-0" />
 
       {/* Mode Tabs */}
-      <div className="flex items-center bg-surface-800/50 rounded-lg p-0.5 gap-0.5">
+      <div className="flex items-center bg-surface-800/50 rounded-lg p-0.5 gap-0.5 shrink-0">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+            className={`flex items-center gap-1 px-2 sm:px-3 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 ${
               activeTab === tab.id
                 ? 'bg-primary-600 text-white shadow-sm'
                 : 'text-surface-400 hover:text-surface-200 hover:bg-surface-700/50'
@@ -157,14 +173,14 @@ export const TopBar: React.FC<TopBarProps> = ({ onExportClick }) => {
         ))}
       </div>
 
-      <div className="w-px h-6 bg-surface-700/50" />
+      <div className="w-px h-6 bg-surface-700/50 shrink-0" />
 
       {/* Undo / Redo */}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
         <button
           onClick={undo}
           disabled={history.past.length === 0}
-          className="p-2 rounded-lg text-surface-400 hover:text-white hover:bg-surface-700/50 disabled:opacity-30 disabled:hover:bg-transparent transition-all"
+          className="p-1.5 sm:p-2 rounded-lg text-surface-400 hover:text-white hover:bg-surface-700/50 disabled:opacity-30 disabled:hover:bg-transparent transition-all"
           title="Undo (Ctrl+Z)"
         >
           <Undo2 size={16} />
@@ -172,7 +188,7 @@ export const TopBar: React.FC<TopBarProps> = ({ onExportClick }) => {
         <button
           onClick={redo}
           disabled={history.future.length === 0}
-          className="p-2 rounded-lg text-surface-400 hover:text-white hover:bg-surface-700/50 disabled:opacity-30 disabled:hover:bg-transparent transition-all"
+          className="p-1.5 sm:p-2 rounded-lg text-surface-400 hover:text-white hover:bg-surface-700/50 disabled:opacity-30 disabled:hover:bg-transparent transition-all"
           title="Redo (Ctrl+Shift+Z)"
         >
           <Redo2 size={16} />
@@ -180,10 +196,10 @@ export const TopBar: React.FC<TopBarProps> = ({ onExportClick }) => {
       </div>
 
       {/* Free drag positioning */}
-      <div className="relative flex items-stretch" ref={positionMenuRef}>
+      <div className="relative flex items-stretch shrink-0" ref={positionMenuRef}>
         <button
           onClick={togglePositionMode}
-          className={`flex items-center gap-1.5 px-3 py-2 rounded-l-lg text-xs font-medium transition-all ${
+          className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-l-lg text-xs font-medium transition-all ${
             positionMode !== 'off'
               ? 'bg-green-500/20 text-green-300 border border-green-500/40 hover:bg-green-500/30'
               : 'bg-surface-800 text-surface-400 hover:text-white hover:bg-surface-700 border border-surface-700/50'
@@ -252,7 +268,7 @@ export const TopBar: React.FC<TopBarProps> = ({ onExportClick }) => {
       {/* Navigator */}
       <button
         onClick={toggleNavigator}
-        className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+        className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs font-medium transition-all shrink-0 ${
           navigatorOpen
             ? 'bg-primary-600/20 text-primary-400 border border-primary-500/30'
             : 'bg-surface-800 text-surface-400 hover:text-white hover:bg-surface-700 border border-surface-700/50'
@@ -266,7 +282,7 @@ export const TopBar: React.FC<TopBarProps> = ({ onExportClick }) => {
       {/* Pages / site manager */}
       <button
         onClick={toggleSitePanel}
-        className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+        className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs font-medium transition-all shrink-0 ${
           sitePanelOpen
             ? 'bg-primary-600/20 text-primary-400 border border-primary-500/30'
             : 'bg-surface-800 text-surface-400 hover:text-white hover:bg-surface-700 border border-surface-700/50'
@@ -280,11 +296,26 @@ export const TopBar: React.FC<TopBarProps> = ({ onExportClick }) => {
         </span>
       </button>
 
+      {activeTab === 'design' && (
+        <button
+          onClick={toggleRightPanel}
+          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all shrink-0 ${
+            rightPanelOpen
+              ? 'bg-primary-600/20 text-primary-400 border border-primary-500/30'
+              : 'bg-surface-800 text-surface-400 hover:text-white hover:bg-surface-700 border border-surface-700/50'
+          }`}
+          title="Toggle Properties panel"
+        >
+          <Paintbrush size={14} />
+          <span className="hidden xl:inline">Properties</span>
+        </button>
+      )}
+
       {/* Spacer */}
-      <div className="flex-1" />
+      <div className="flex-1 min-w-[8px]" />
 
       {/* Page Title */}
-      <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-surface-800/30 rounded-lg border border-surface-700/30">
+      <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-surface-800/30 rounded-lg border border-surface-700/30 shrink-0">
         <span className="text-xs text-surface-500">Page:</span>
         <span className="text-xs font-medium text-surface-300">
           {(() => {
@@ -296,12 +327,12 @@ export const TopBar: React.FC<TopBarProps> = ({ onExportClick }) => {
       </div>
 
       {/* Device Switcher */}
-      <div className="flex items-center bg-surface-800/50 rounded-lg p-0.5 gap-0.5">
+      <div className="flex items-center bg-surface-800/50 rounded-lg p-0.5 gap-0.5 shrink-0">
         {devices.map(d => (
           <button
             key={d.id}
             onClick={() => setDeviceView(d.id)}
-            className={`p-2 rounded-md transition-all ${
+            className={`p-1.5 sm:p-2 rounded-md transition-all ${
               deviceView === d.id
                 ? 'bg-surface-700 text-primary-400 shadow-sm'
                 : 'text-surface-500 hover:text-surface-300 hover:bg-surface-700/30'
@@ -314,38 +345,38 @@ export const TopBar: React.FC<TopBarProps> = ({ onExportClick }) => {
       </div>
 
       {/* Zoom */}
-      <div className="flex items-center gap-1 bg-surface-800/50 rounded-lg px-1">
-        <button onClick={() => setZoom(Math.max(25, zoom - 10))} className="p-1.5 text-surface-400 hover:text-white transition-colors">
+      <div className="flex items-center gap-1 bg-surface-800/50 rounded-lg px-1 shrink-0">
+        <button onClick={() => setZoom(Math.max(25, zoom - 10))} className="p-1 sm:p-1.5 text-surface-400 hover:text-white transition-colors">
           <ZoomOut size={14} />
         </button>
-        <span className="text-xs text-surface-400 w-10 text-center font-mono">{zoom}%</span>
-        <button onClick={() => setZoom(Math.min(200, zoom + 10))} className="p-1.5 text-surface-400 hover:text-white transition-colors">
+        <span className="text-[11px] sm:text-xs text-surface-400 w-8 sm:w-10 text-center font-mono">{zoom}%</span>
+        <button onClick={() => setZoom(Math.min(200, zoom + 10))} className="p-1 sm:p-1.5 text-surface-400 hover:text-white transition-colors">
           <ZoomIn size={14} />
         </button>
       </div>
 
-      <div className="w-px h-6 bg-surface-700/50" />
+      <div className="w-px h-6 bg-surface-700/50 shrink-0" />
 
       {/* Preview */}
       <button
         onClick={togglePreview}
-        className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+        className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs font-medium transition-all shrink-0 ${
           isPreviewMode
             ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30 border border-green-500/30'
             : 'bg-surface-800 text-surface-300 hover:text-white hover:bg-surface-700 border border-surface-700/50'
         }`}
       >
         {isPreviewMode ? <EyeOff size={14} /> : <Eye size={14} />}
-        {isPreviewMode ? 'Editing' : 'Preview'}
+        <span className="hidden sm:inline">{isPreviewMode ? 'Editing' : 'Preview'}</span>
       </button>
 
       {/* Export */}
       <button
         onClick={onExportClick}
-        className="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-500 hover:to-purple-500 text-white rounded-lg text-xs font-semibold shadow-lg shadow-primary-500/20 hover:shadow-primary-500/40 transition-all active:scale-95"
+        className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-500 hover:to-purple-500 text-white rounded-lg text-xs font-semibold shadow-lg shadow-primary-500/20 hover:shadow-primary-500/40 transition-all active:scale-95 shrink-0"
       >
         <Download size={14} />
-        Export
+        <span>Export</span>
       </button>
     </div>
   );

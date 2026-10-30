@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useBuilderStore } from '../store/builderStore';
 import { getElementDefinition } from '../engine/elementRegistry';
 import { getIconEmoji } from './Sidebar';
@@ -111,6 +111,15 @@ const Row: React.FC<{
 export const Navigator: React.FC = () => {
   const { rootIds, selectElement, toggleNavigator, rightPanelOpen, elements } = useBuilderStore();
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  const [isLargeScreen, setIsLargeScreen] = useState(
+    typeof window !== 'undefined' ? window.innerWidth >= 1024 : true
+  );
+
+  useEffect(() => {
+    const handleResize = () => setIsLargeScreen(window.innerWidth >= 1024);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const toggle = (id: string) => setCollapsed((prev) => ({ ...prev, [id]: !prev[id] }));
 
@@ -127,7 +136,7 @@ export const Navigator: React.FC = () => {
   return (
     <div
       className="navigator-panel"
-      style={{ right: rightPanelOpen ? 336 : 12 }}
+      style={{ right: isLargeScreen && rightPanelOpen ? 336 : 12 }}
       onClick={(e) => e.stopPropagation()}
     >
       <div className="panel-header">

@@ -161,5 +161,18 @@ export const COMMERCE_CSS = `
   font-size:.8rem;z-index:10000;box-shadow:0 12px 30px -12px rgba(0,0,0,.6)}
 .wb-cart-bar{position:sticky;bottom:0;display:flex;gap:.6rem;align-items:center;justify-content:space-between;
   border-top:1px solid #e2e8f0;background:#fff;padding:.7rem 0;margin-top:.8rem}
+@media (max-width:767px){
+  .wb-shop__grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.6rem}
+  .wb-product__media{height:110px;font-size:2.2rem}
+  .wb-product__body{padding:.5rem .6rem}
+  .wb-product__name{font-size:.8rem}
+  .wb-product__price b{font-size:.9rem}
+  .wb-shop__toolbar{gap:.4rem}
+  .wb-line{grid-template-columns:44px minmax(0,1fr) auto;gap:.5rem;padding:.45rem}
+  .wb-detail__media{min-height:200px;font-size:4.5rem}
+  .wb-drawer__body{width:100%;max-width:100%}
+  .wb-form__grid{grid-template-columns:minmax(0,1fr)}
+  .wb-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 @media print{.wb-shop__toolbar,.wb-btn,.wb-tabs,.wb-noprint{display:none!important}}
 `.trim();

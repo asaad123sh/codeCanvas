@@ -9,6 +9,7 @@ import { PagesPanel } from './components/PagesPanel';
 import { CodeEditor } from './components/CodeEditor';
 import { DatabaseDesigner } from './components/DatabaseDesigner';
 import { ExportModal } from './components/ExportModal';
+import { LayoutGrid, Files, ListTree, Paintbrush } from 'lucide-react';
 import {
   DndContext,
   DragOverlay,
@@ -137,8 +138,17 @@ function indexInList(children: string[], pointerY: number | null, rects: RectMap
 }
 
 const App: React.FC = () => {
-  const { activeTab, leftPanelOpen, rightPanelOpen, navigatorOpen, sitePanelOpen, toggleSitePanel } =
-    useBuilderStore();
+  const {
+    activeTab,
+    leftPanelOpen,
+    rightPanelOpen,
+    navigatorOpen,
+    sitePanelOpen,
+    toggleLeftPanel,
+    toggleRightPanel,
+    toggleNavigator,
+    toggleSitePanel,
+  } = useBuilderStore();
 
   const [exportOpen, setExportOpen] = useState(false);
   const [activeDragType, setActiveDragType] = useState<ElementType | null>(null);
@@ -281,13 +291,87 @@ const App: React.FC = () => {
             onDragCancel={handleDragCancel}
           >
             <div className="relative flex flex-1 overflow-hidden">
-              {leftPanelOpen && <Sidebar />}
-              {sitePanelOpen && <PagesPanel onClose={toggleSitePanel} />}
-              <div className="flex-1 overflow-auto bg-surface-950 relative">
+              {/* Left Panel / Elements drawer on mobile, inline on desktop */}
+              {leftPanelOpen && (
+                <>
+                  <div
+                    className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity"
+                    onClick={toggleLeftPanel}
+                  />
+                  <div className="fixed inset-y-0 left-0 z-50 lg:relative lg:inset-auto lg:z-auto flex h-full">
+                    <Sidebar />
+                  </div>
+                </>
+              )}
+
+              {/* Site / Pages panel on mobile, inline on desktop */}
+              {sitePanelOpen && (
+                <>
+                  <div
+                    className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity"
+                    onClick={toggleSitePanel}
+                  />
+                  <div className="fixed inset-y-0 left-0 z-50 lg:relative lg:inset-auto lg:z-auto flex h-full">
+                    <PagesPanel onClose={toggleSitePanel} />
+                  </div>
+                </>
+              )}
+
+              {/* Canvas is always the full visible workspace */}
+              <div className="flex-1 overflow-auto bg-surface-950 relative w-full h-full">
                 <Canvas />
               </div>
-              {rightPanelOpen && <PropertiesPanel />}
+
+              {/* Right Panel / Properties drawer on mobile, inline on desktop */}
+              {rightPanelOpen && (
+                <>
+                  <div
+                    className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity"
+                    onClick={toggleRightPanel}
+                  />
+                  <div className="fixed inset-y-0 right-0 z-50 lg:relative lg:inset-auto lg:z-auto flex h-full">
+                    <PropertiesPanel />
+                  </div>
+                </>
+              )}
+
               {navigatorOpen && <Navigator />}
+
+              {/* Mobile quick navigation pill */}
+              <div className="lg:hidden fixed bottom-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1 p-1 bg-surface-900/95 backdrop-blur-md border border-surface-700/80 rounded-full shadow-2xl">
+                <button
+                  onClick={toggleLeftPanel}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition-colors ${
+                    leftPanelOpen ? 'bg-primary-600 text-white' : 'text-surface-300 hover:text-white'
+                  }`}
+                >
+                  <LayoutGrid size={13} /> Elements
+                </button>
+                <button
+                  onClick={toggleSitePanel}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition-colors ${
+                    sitePanelOpen ? 'bg-primary-600 text-white' : 'text-surface-300 hover:text-white'
+                  }`}
+                >
+                  <Files size={13} /> Pages
+                </button>
+                <button
+                  onClick={toggleNavigator}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition-colors ${
+                    navigatorOpen ? 'bg-primary-600 text-white' : 'text-surface-300 hover:text-white'
+                  }`}
+                >
+                  <ListTree size={13} /> Layers
+                </button>
+                <button
+                  onClick={toggleRightPanel}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition-colors ${
+                    rightPanelOpen ? 'bg-primary-600 text-white' : 'text-surface-300 hover:text-white'
+                  }`}
+                >
+                  <Paintbrush size={13} /> Style
+                </button>
+              </div>
             </div>
 
             <DragOverlay dropAnimation={null}>
@@ -314,7 +398,7 @@ const App: React.FC = () => {
         )}
 
         {activeTab === 'settings' && (
-          <div className="flex-1 overflow-auto p-6">
+          <div className="flex-1 overflow-auto p-3 sm:p-6">
             <SettingsPanel />
           </div>
         )}

@@ -132,7 +132,7 @@ export const DatabaseDesigner: React.FC = () => {
   return (
     <div className="flex-1 flex h-full overflow-hidden bg-surface-950">
       {/* Tables List */}
-      <div className="w-64 border-r border-surface-700/50 flex flex-col bg-surface-900 shrink-0">
+      <div className={`w-full md:w-64 border-r border-surface-700/50 flex flex-col bg-surface-900 shrink-0 ${editingTable ? 'hidden md:flex' : 'flex'}`}>
         <div className="panel-header">
           <span className="panel-title flex items-center gap-2">
             <Database size={14} className="text-primary-400" />
@@ -264,7 +264,7 @@ export const DatabaseDesigner: React.FC = () => {
       </div>
 
       {/* Column Editor */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className={`flex-1 flex flex-col overflow-hidden ${editingTable ? 'flex' : 'hidden md:flex'}`}>
         {editingTable ? (
           (() => {
             const table = tables.find(t => t.id === editingTable);
@@ -272,8 +272,15 @@ export const DatabaseDesigner: React.FC = () => {
             return (
               <>
                 <div className="panel-header bg-surface-900">
-                  <div className="flex items-center gap-3">
-                    <Table size={16} className="text-primary-400" />
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <button
+                      onClick={() => setEditingTable(null)}
+                      className="md:hidden text-xs text-primary-400 hover:text-primary-300 px-2 py-1 bg-surface-800 rounded transition-colors"
+                      title="Back to tables"
+                    >
+                      ← Tables
+                    </button>
+                    <Table size={16} className="text-primary-400 shrink-0" />
                     <input
                       value={table.name}
                       onChange={(e) => updateTable(table.id!, { name: e.target.value })}
@@ -283,10 +290,10 @@ export const DatabaseDesigner: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => addColumn(table.id!)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-600 hover:bg-primary-500 text-white rounded-md text-xs font-medium transition-colors"
+                      className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 bg-primary-600 hover:bg-primary-500 text-white rounded-md text-xs font-medium transition-colors"
                     >
                       <Plus size={12} />
-                      Add Column
+                      <span className="hidden sm:inline">Add Column</span>
                     </button>
                     <button
                       onClick={() => removeTable(table.id!)}
@@ -298,8 +305,9 @@ export const DatabaseDesigner: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex-1 overflow-auto custom-scrollbar p-4">
-                  <table className="w-full text-sm">
+                <div className="flex-1 overflow-auto custom-scrollbar p-2 sm:p-4">
+                  <div className="overflow-x-auto w-full">
+                  <table className="w-full text-sm min-w-[560px]">
                     <thead>
                       <tr className="border-b border-surface-700/50 text-left">
                         <th className="pb-3 px-3 text-xs font-semibold text-surface-400 uppercase tracking-wider w-8"></th>
@@ -390,6 +398,7 @@ export const DatabaseDesigner: React.FC = () => {
                       ))}
                     </tbody>
                   </table>
+                  </div>
                 </div>
               </>
             );

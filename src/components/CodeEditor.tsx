@@ -42,14 +42,14 @@ export const CodeEditor: React.FC = () => {
   return (
     <div className="flex-1 flex flex-col h-full bg-surface-950 overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2 bg-surface-900 border-b border-surface-700/50 shrink-0">
-        <div className="flex items-center gap-1">
-          <Code size={16} className="text-primary-400 mr-2" />
+      <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-2 sm:px-4 sm:py-2 bg-surface-900 border-b border-surface-700/50 shrink-0">
+        <div className="flex items-center gap-1 overflow-x-auto no-scrollbar">
+          <Code size={16} className="text-primary-400 mr-1 sm:mr-2 shrink-0" />
           {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 ${
                 activeTab === tab.id
                   ? `bg-surface-800 ${tab.color} shadow-sm`
                   : 'text-surface-500 hover:text-surface-300 hover:bg-surface-800/50'
@@ -61,11 +61,11 @@ export const CodeEditor: React.FC = () => {
           ))}
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           {!saved && (
             <span className="text-xs text-amber-400 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-              Unsaved changes
+              <span className="hidden sm:inline">Unsaved changes</span>
             </span>
           )}
           <button
@@ -91,7 +91,7 @@ export const CodeEditor: React.FC = () => {
           value={getValue()}
           onChange={(e) => handleChange(e.target.value)}
           spellCheck={false}
-          className="flex-1 w-full h-full resize-none bg-[#1a1b26] text-[#a9b1d6] font-mono text-sm leading-6 p-4 outline-none border-none overflow-auto custom-scrollbar"
+          className="flex-1 w-full h-full resize-none bg-[#1a1b26] text-[#a9b1d6] font-mono text-xs sm:text-sm leading-6 p-3 sm:p-4 outline-none border-none overflow-auto custom-scrollbar"
           style={{ tabSize: 2 }}
           placeholder={`// Enter your custom ${activeTab.toUpperCase()} here...\n// This code will be injected into the exported website.\n\n${
             activeTab === 'html' ? '<!-- Add custom HTML elements -->' :

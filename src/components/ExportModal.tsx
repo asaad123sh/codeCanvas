@@ -127,7 +127,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
         </div>
 
         {/* Progress Steps */}
-        <div className="px-6 py-4 border-b border-surface-700/30">
+        <div className="px-3 py-3 sm:px-6 sm:py-4 border-b border-surface-700/30">
           <div className="flex items-center justify-between">
             {['Runtime', 'Database', 'Configure', 'Export'].map((label, i) => {
               const steps = ['runtime', 'database', 'config', 'exporting'];
@@ -136,14 +136,14 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
               return (
                 <React.Fragment key={label}>
                   <div className="flex flex-col items-center gap-1">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
+                    <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold transition-all ${
                       isActive ? 'bg-primary-600 text-white' : 'bg-surface-700 text-surface-400'
                     }`}>
-                      {i < currentIdx || step === 'done' ? <Check className="w-4 h-4" /> : i + 1}
+                      {i < currentIdx || step === 'done' ? <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : i + 1}
                     </div>
-                    <span className={`text-xs ${isActive ? 'text-primary-400' : 'text-surface-500'}`}>{label}</span>
+                    <span className={`text-[10px] sm:text-xs ${isActive ? 'text-primary-400' : 'text-surface-500'}`}>{label}</span>
                   </div>
-                  {i < 3 && <div className={`flex-1 h-0.5 mx-2 ${isActive ? 'bg-primary-600' : 'bg-surface-700'}`} />}
+                  {i < 3 && <div className={`flex-1 h-0.5 mx-1 sm:mx-2 ${isActive ? 'bg-primary-600' : 'bg-surface-700'}`} />}
                 </React.Fragment>
               );
             })}
@@ -151,23 +151,23 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
         </div>
 
         {/* Content */}
-        <div className="p-6 min-h-[350px]">
+        <div className="p-3 sm:p-6 min-h-[300px] overflow-y-auto custom-scrollbar flex-1">
           {step === 'runtime' && (
             <div>
-              <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+              <h3 className="text-base sm:text-lg font-semibold text-white mb-2 flex items-center gap-2">
                 <Server className="w-5 h-5 text-primary-400" /> Select Backend Runtime
               </h3>
-              <p className="text-sm text-surface-400 mb-6">Choose the server technology for your exported website.</p>
-              <div className="grid grid-cols-3 gap-4">
+              <p className="text-xs sm:text-sm text-surface-400 mb-4 sm:mb-6">Choose the server technology for your exported website.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
                 <button
                   onClick={() => { setTarget({ ...target, runtime: 'wordpress', database: 'mysql' }); setStep('database'); }}
-                  className={`p-5 rounded-xl border-2 transition-all text-left ${
+                  className={`p-4 sm:p-5 rounded-xl border-2 transition-all text-left ${
                     target.runtime === 'wordpress' ? 'border-primary-500 bg-primary-500/10' : 'border-surface-700 hover:border-surface-500 bg-surface-800/50'
                   }`}
                 >
-                  <div className="text-3xl mb-3">🟢</div>
-                  <h4 className="font-bold text-white text-lg">WordPress</h4>
-                  <p className="text-sm text-surface-400 mt-1">A complete classic theme with Elementor-style markup and breakpoints.</p>
+                  <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">🟢</div>
+                  <h4 className="font-bold text-white text-base sm:text-lg">WordPress</h4>
+                  <p className="text-xs sm:text-sm text-surface-400 mt-1">A complete classic theme with Elementor-style markup and breakpoints.</p>
                   <ul className="mt-3 space-y-1 text-xs text-surface-400">
                     <li>• style.css / functions.php / templates</li>
                     <li>• wp_head() + wp_footer() hooks</li>
@@ -177,13 +177,13 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
                 </button>
                 <button
                   onClick={() => { setTarget({ ...target, runtime: 'php', database: 'mysql' }); setStep('database'); }}
-                  className={`p-5 rounded-xl border-2 transition-all text-left ${
+                  className={`p-4 sm:p-5 rounded-xl border-2 transition-all text-left ${
                     target.runtime === 'php' ? 'border-primary-500 bg-primary-500/10' : 'border-surface-700 hover:border-surface-500 bg-surface-800/50'
                   }`}
                 >
-                  <div className="text-3xl mb-3">🐘</div>
-                  <h4 className="font-bold text-white text-lg">PHP</h4>
-                  <p className="text-sm text-surface-400 mt-1">Classic server-side rendering with PDO database connections. Perfect for shared hosting.</p>
+                  <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">🐘</div>
+                  <h4 className="font-bold text-white text-base sm:text-lg">PHP</h4>
+                  <p className="text-xs sm:text-sm text-surface-400 mt-1">Classic server-side rendering with PDO database connections. Perfect for shared hosting.</p>
                   <ul className="mt-3 space-y-1 text-xs text-surface-400">
                     <li>• Apache/Nginx compatible</li>
                     <li>• PDO MySQL connections</li>
@@ -193,13 +193,13 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
                 </button>
                 <button
                   onClick={() => { setTarget({ ...target, runtime: 'nodejs' }); setStep('database'); }}
-                  className={`p-5 rounded-xl border-2 transition-all text-left ${
+                  className={`p-4 sm:p-5 rounded-xl border-2 transition-all text-left ${
                     target.runtime === 'nodejs' ? 'border-primary-500 bg-primary-500/10' : 'border-surface-700 hover:border-surface-500 bg-surface-800/50'
                   }`}
                 >
-                  <div className="text-3xl mb-3">💚</div>
-                  <h4 className="font-bold text-white text-lg">Node.js</h4>
-                  <p className="text-sm text-surface-400 mt-1">Modern Express.js backend with REST API. Supports multiple databases.</p>
+                  <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">💚</div>
+                  <h4 className="font-bold text-white text-base sm:text-lg">Node.js</h4>
+                  <p className="text-xs sm:text-sm text-surface-400 mt-1">Modern Express.js backend with REST API. Supports multiple databases.</p>
                   <ul className="mt-3 space-y-1 text-xs text-surface-400">
                     <li>• Express.js server</li>
                     <li>• RESTful API routes</li>
@@ -213,15 +213,15 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
 
           {step === 'database' && (
             <div>
-              <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+              <h3 className="text-base sm:text-lg font-semibold text-white mb-2 flex items-center gap-2">
                 <Database className="w-5 h-5 text-primary-400" /> Select Database
               </h3>
-              <p className="text-sm text-surface-400 mb-6">
+              <p className="text-xs sm:text-sm text-surface-400 mb-4 sm:mb-6">
                 {target.runtime === 'nodejs'
                   ? 'Node.js supports multiple databases. Choose your preferred engine.'
                   : `${target.runtime === 'wordpress' ? 'WordPress' : 'PHP'} exports use MySQL / MariaDB (the WordPress standard).`}
               </p>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 {[
                   { id: 'mysql' as const, name: 'MySQL', icon: '🐬', desc: 'Most popular relational DB' },
                   { id: 'postgresql' as const, name: 'PostgreSQL', icon: '🐘', desc: 'Advanced relational DB', nodeOnly: true },
@@ -233,13 +233,13 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
                       key={db.id}
                       disabled={disabled}
                       onClick={() => { setTarget({ ...target, database: db.id }); setStep('config'); }}
-                      className={`p-5 rounded-xl border-2 transition-all text-center ${
+                      className={`p-4 sm:p-5 rounded-xl border-2 transition-all text-center ${
                         disabled ? 'opacity-40 cursor-not-allowed border-surface-800' :
                         target.database === db.id ? 'border-primary-500 bg-primary-500/10' : 'border-surface-700 hover:border-surface-500 bg-surface-800/50'
                       }`}
                     >
-                      <div className="text-3xl mb-2">{db.icon}</div>
-                      <h4 className="font-bold text-white">{db.name}</h4>
+                      <div className="text-2xl sm:text-3xl mb-2">{db.icon}</div>
+                      <h4 className="font-bold text-white text-sm sm:text-base">{db.name}</h4>
                       <p className="text-xs text-surface-400 mt-1">{db.desc}</p>
                       {disabled && <p className="text-xs text-red-400 mt-2">Node.js only</p>}
                     </button>
@@ -252,10 +252,10 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
 
           {step === 'config' && (
             <div>
-              <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+              <h3 className="text-base sm:text-lg font-semibold text-white mb-2 flex items-center gap-2">
                 <HardDrive className="w-5 h-5 text-primary-400" /> Project Configuration
               </h3>
-              <p className="text-sm text-surface-400 mb-6">Configure your export settings before generating files.</p>
+              <p className="text-xs sm:text-sm text-surface-400 mb-4 sm:mb-6">Configure your export settings before generating files.</p>
               <div className="space-y-4">
                 <div>
                   <label className="label-text">Project Name</label>
@@ -267,12 +267,12 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
                     placeholder="my-awesome-website"
                   />
                 </div>
-                <div className="flex items-center justify-between p-4 bg-surface-800 rounded-xl border border-surface-700/50">
+                <div className="flex items-center justify-between p-3 sm:p-4 bg-surface-800 rounded-xl border border-surface-700/50">
                   <div>
-                    <h4 className="font-medium text-white">Include Database Schema</h4>
+                    <h4 className="font-medium text-white text-sm sm:text-base">Include Database Schema</h4>
                     <p className="text-xs text-surface-400 mt-1">Generate SQL migrations and connection files for {databaseSchema.tables.length} table(s)</p>
                   </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
+                  <label className="relative inline-flex items-center cursor-pointer shrink-0 ml-3">
                     <input
                       type="checkbox"
                       checked={target.includeDatabase}
@@ -282,12 +282,12 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
                     <div className="w-11 h-6 bg-surface-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
                   </label>
                 </div>
-                <div className="p-4 bg-surface-800 rounded-xl border border-surface-700/50">
-                  <h4 className="font-medium text-white">Classes & IDs</h4>
+                <div className="p-3 sm:p-4 bg-surface-800 rounded-xl border border-surface-700/50">
+                  <h4 className="font-medium text-white text-sm sm:text-base">Classes & IDs</h4>
                   <p className="text-xs text-surface-400 mt-1 mb-3">
                     How should the generated code assign classes and ids to your elements?
                   </p>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {([
                       {
                         id: 'unique' as const,
@@ -303,28 +303,28 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
                       <button
                         key={mode.id}
                         onClick={() => setTarget({ ...target, classIdMode: mode.id as ClassIdMode })}
-                        className={`p-4 rounded-xl border-2 text-left transition-all ${
+                        className={`p-3 sm:p-4 rounded-xl border-2 text-left transition-all ${
                           target.classIdMode === mode.id
                             ? 'border-primary-500 bg-primary-500/10'
                             : 'border-surface-700 hover:border-surface-500 bg-surface-800/50'
                         }`}
                       >
-                        <h5 className="font-semibold text-white text-sm">{mode.name}</h5>
+                        <h5 className="font-semibold text-white text-xs sm:text-sm">{mode.name}</h5>
                         <p className="text-xs text-surface-400 mt-1">{mode.desc}</p>
                       </button>
                     ))}
                   </div>
                 </div>
-                <div className="p-4 bg-surface-800/50 rounded-xl border border-surface-700/30">
-                  <h4 className="text-sm font-semibold text-surface-300 mb-2">Export Summary</h4>
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div className="flex items-center gap-2"><FileCode className="w-4 h-4 text-primary-400" /><span className="text-surface-300">Runtime:</span><span className="font-bold text-white uppercase">{target.runtime}</span></div>
-                    <div className="flex items-center gap-2"><Database className="w-4 h-4 text-primary-400" /><span className="text-surface-300">Database:</span><span className="font-bold text-white uppercase">{target.includeDatabase ? target.database : 'none'}</span></div>
+                <div className="p-3 sm:p-4 bg-surface-800/50 rounded-xl border border-surface-700/30">
+                  <h4 className="text-xs sm:text-sm font-semibold text-surface-300 mb-2">Export Summary</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 text-xs sm:text-sm">
+                    <div className="flex items-center gap-2"><FileCode className="w-4 h-4 text-primary-400 shrink-0" /><span className="text-surface-300">Runtime:</span><span className="font-bold text-white uppercase">{target.runtime}</span></div>
+                    <div className="flex items-center gap-2"><Database className="w-4 h-4 text-primary-400 shrink-0" /><span className="text-surface-300">Database:</span><span className="font-bold text-white uppercase">{target.includeDatabase ? target.database : 'none'}</span></div>
                   </div>
                 </div>
               </div>
-              <div className="flex gap-3 mt-6">
-                <button onClick={() => setStep('database')} className="btn-secondary">← Back</button>
+              <div className="flex flex-col-reverse sm:flex-row gap-2 sm:gap-3 mt-4 sm:mt-6">
+                <button onClick={() => setStep('database')} className="btn-secondary justify-center">← Back</button>
                 <button onClick={handleExport} className="btn-primary flex-1 justify-center" disabled={!target.projectName}>
                   <Download className="w-4 h-4" /> Generate & Download ZIP
                 </button>

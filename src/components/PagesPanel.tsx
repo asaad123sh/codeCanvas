@@ -47,7 +47,7 @@ export const PagesPanel: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
   const active = pages.find((p) => p.id === activePageId);
 
   return (
-    <div className="w-[320px] h-full bg-surface-900 border-r border-surface-700/50 flex flex-col shrink-0 overflow-hidden">
+    <div className="w-[320px] max-w-[90vw] h-full bg-surface-900 border-r border-surface-700/50 flex flex-col shrink-0 overflow-hidden shadow-2xl lg:shadow-none">
       <div className="panel-header">
         <span className="panel-title">Site</span>
         {onClose ? (

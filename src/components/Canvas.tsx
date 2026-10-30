@@ -911,7 +911,7 @@ const ElementRenderer: React.FC<ElementRendererProps> = ({ id }) => {
       )}
       {isSelected && !isEditing && !isVoid && (
         <div
-          className="element-toolbar"
+          className="element-toolbar max-w-[calc(100vw-16px)] overflow-x-auto no-scrollbar"
           onPointerDown={stop}
           onClick={stop}
           onDoubleClick={stop}
@@ -968,7 +968,7 @@ export const Canvas: React.FC = () => {
 
   return (
     <div
-      className={`w-full h-full overflow-auto p-6 canvas-scroll-area ${isPreviewMode ? 'preview-mode' : ''}`}
+      className={`w-full h-full overflow-auto p-2 sm:p-4 md:p-6 canvas-scroll-area ${isPreviewMode ? 'preview-mode' : ''}`}
       style={{ background: '#0f172a' }}
       onClick={() => {
         if (!isPreviewMode) selectElement(null);
@@ -976,7 +976,7 @@ export const Canvas: React.FC = () => {
     >
       <div
         ref={setNodeRef}
-        className={`wb-root canvas-page mx-auto rounded-lg shadow-2xl ${rootHintActive ? 'root-drop-active' : ''}`}
+        className={`wb-root canvas-page mx-auto rounded-lg shadow-2xl max-w-full ${rootHintActive ? 'root-drop-active' : ''}`}
         style={{
           maxWidth,
           zoom: `${zoom / 100}`,

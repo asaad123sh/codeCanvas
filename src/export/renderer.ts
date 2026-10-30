@@ -772,11 +772,27 @@ export function renderDocument(
  * injects these separately so the editor matches the export.
  */
 export const BOX_LAYOUT_RESPONSIVE_CSS: { tablet: string; mobile: string } = {
-  tablet: '.wb-root .wb-grid-box { grid-template-columns: repeat(var(--wb-cols-sm, 2), minmax(0, 1fr)); }',
+  tablet: [
+    '.wb-root .wb-grid-box { grid-template-columns: repeat(var(--wb-cols-sm, 2), minmax(0, 1fr)); }',
+    '.wb-root .wb-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }',
+    '.wb-root .wb-posts, .wb-root .wb-portfolio, .wb-root .wb-loop-grid, .wb-root .wb-woo-products { grid-template-columns: repeat(2, minmax(0, 1fr)); }',
+  ].join('\n'),
   mobile: [
     '.wb-root .wb-grid-box { grid-template-columns: minmax(0, 1fr); }',
     '.wb-root .wb-arrange-horizontal { flex-direction: column; }',
     '.wb-root .wb-arrange-horizontal > * { flex: 0 0 auto; width: 100%; }',
+    '.wb-root .wb-container { flex-direction: column; width: 100%; max-width: 100%; }',
+    '.wb-root .wb-column { width: 100% !important; max-width: 100% !important; min-width: 0; }',
+    '.wb-root .wb-gallery, .wb-root .wb-posts, .wb-root .wb-portfolio, .wb-root .wb-loop-grid, .wb-root .wb-woo-products { grid-template-columns: minmax(0, 1fr); }',
+    '.wb-root .wb-pricing-table { flex-direction: column; align-items: center; width: 100%; }',
+    '.wb-root .wb-pricing-table > * { width: 100%; max-width: 400px; }',
+    '.wb-root .wb-countdown { flex-wrap: wrap; gap: 8px; justify-content: center; }',
+    '.wb-root .wb-flip-box { max-width: 100%; }',
+    '.wb-root .wb-search-form { flex-direction: column; width: 100%; max-width: 100%; }',
+    '.wb-root .wb-search-form .wb-search__submit { width: 100%; }',
+    '.wb-root .wb-login-form { width: 100%; max-width: 100%; padding: 20px 16px; }',
+    '.wb-root .wb-tabs__nav { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }',
+    '.wb-root .wb-mega-menu, .wb-root .wb-nav-menu { flex-direction: column; align-items: stretch; gap: 12px; }',
   ].join('\n'),
 };
 
@@ -786,9 +802,12 @@ export const BOX_LAYOUT_RESPONSIVE_CSS: { tablet: string; mobile: string } = {
  */
 export const BASE_CSS = `
 .wb-root, .wb-root * { box-sizing: border-box; }
-.wb-root { position: relative; }
-.wb-root .wb-element { position: relative; }
-.wb-root img { max-width: 100%; }
+.wb-root { position: relative; width: 100%; max-width: 100%; }
+.wb-root .wb-element { position: relative; max-width: 100%; }
+.wb-root img, .wb-root video, .wb-root iframe { max-width: 100%; height: auto; }
+.wb-root .wb-container { max-width: 100%; }
+.wb-root .wb-section { width: 100%; max-width: 100%; }
+.wb-root [style*="width"] { max-width: 100%; }
 .wb-root .wb-text { white-space: pre-wrap; }
 .wb-root .wb-video-placeholder,
 .wb-root .wb-map-placeholder {
